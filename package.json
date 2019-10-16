@@ -6,10 +6,12 @@
   "author": "kiyon <kiyonlin@163.com>",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node-dev --respawn --transpileOnly src/index.ts"
+    "start": "ts-node-dev --respawn --transpileOnly src/index.ts",
+    "style:prettier": "prettier --write \"src/**/*.ts\""
   },
   "devDependencies": {
     "@types/node": "^12.11.1",
+    "prettier": "^1.18.2",
     "ts-node-dev": "^1.0.0-pre.43",
     "typescript": "^3.6.4"
   }
