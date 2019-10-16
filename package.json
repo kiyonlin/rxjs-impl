@@ -4,5 +4,9 @@
   "main": "index.js",
   "repository": "https://github.com/kiyonlin/rxjs-impl.git",
   "author": "kiyon <kiyonlin@163.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^12.11.1",
+    "typescript": "^3.6.4"
+  }
 }

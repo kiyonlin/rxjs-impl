@@ -1,0 +1,16 @@
+{
+  "version": "3.6.4",
+  "compilerOptions": {
+    "outDir": "dist",
+    "lib": [ "es6" ],
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "declaration": true
+  },
+  "exclude": [ "dist", "node_modules" ]
+}
