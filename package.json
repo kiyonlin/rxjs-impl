@@ -7,12 +7,15 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node-dev --respawn --transpileOnly src/index.ts",
-    "style:prettier": "prettier --write \"src/**/*.ts\""
+    "style:prettier": "prettier --write \"src/**/*.ts\"",
+    "style:lint": "tslint -p tsconfig.json -c tslint.json"
   },
   "devDependencies": {
     "@types/node": "^12.11.1",
     "prettier": "^1.18.2",
     "ts-node-dev": "^1.0.0-pre.43",
+    "tslint": "^5.20.0",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.6.4"
   }
 }
