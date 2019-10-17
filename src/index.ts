@@ -56,6 +56,17 @@ class Observable {
     }
 }
 
+function map(source, project) {
+    return new Observable((observer) => {
+        const mapObserver = {
+            next: (v) => observer.next(project(v)),
+            error: (err) => observer.error(err),
+            complete: () => observer.complete(),
+        };
+        return source.subscribe(mapObserver);
+    })
+}
+
 const myObservable = new Observable((observer) => {
     let i = 0;
     const id = setInterval(() => {
@@ -74,11 +85,13 @@ const myObservable = new Observable((observer) => {
     }
 });
 
+const mapObservable = map(myObservable, v => v * 2);
+
 const observer = {
     next: v => console.log(`next -> ${v}`),
     error: () => {},
     complete: () => console.log('complete'),
 };
 
-const unsub = myObservable.subscribe(observer);
+const unsub = mapObservable.subscribe(observer);
 setTimeout(unsub, 55);
