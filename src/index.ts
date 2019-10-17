@@ -1,6 +1,7 @@
 class SafeObserver {
     private destination: any;
     private isUnsubscribed: boolean;
+    public _unsubscribe: any;
 
     constructor(destination) {
         this.destination = destination;
@@ -16,20 +17,27 @@ class SafeObserver {
     error(err) {
         const destination = this.destination;
         if(!this.isUnsubscribed) {
-            this.isUnsubscribed = true;
             if(destination.error) {
                 destination.error(err);
             }
+            this.unsubscribe();
         }
     }
 
     complete() {
         const destination = this.destination;
         if(!this.isUnsubscribed) {
-            this.isUnsubscribed = true;
             if(destination.complete) {
                 destination.complete();
             }
+            this.unsubscribe();
+        }
+    }
+
+    unsubscribe() {
+        this.isUnsubscribed = true;
+        if(this._unsubscribe) {
+            this._unsubscribe();
         }
     }
 }
@@ -43,11 +51,12 @@ class Observable {
 
     subscribe(observer) {
         const safeObserver = new SafeObserver(observer);
-        return this._subscribe(safeObserver);
+        safeObserver._unsubscribe = this._subscribe(safeObserver);
+        return () => safeObserver.unsubscribe();
     }
 }
 
-const myObservable = new Observable(observer => {
+const myObservable = new Observable((observer) => {
     let i = 0;
     const id = setInterval(() => {
         if(i < 10) {
