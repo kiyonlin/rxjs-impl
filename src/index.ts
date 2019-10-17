@@ -8,6 +8,11 @@ function myObservable(observer) {
             clearInterval(id);
         }
     }, 10);
+
+    return () => {
+        console.log('disposed!');
+        clearInterval(id);
+    }
 }
 
 const observer = {
@@ -16,4 +21,5 @@ const observer = {
     complete: () => console.log('complete'),
 };
 
-myObservable(observer);
+const unsub = myObservable(observer);
+setTimeout(unsub, 55);
