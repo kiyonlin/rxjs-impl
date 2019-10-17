@@ -1,13 +1,18 @@
 function myObservable(observer) {
-    for(let i = 0; i < 10; i++) {
-        observer.next(i);
-    }
-    observer.complete();
+    let i = 0;
+    const id = setInterval(() => {
+        if(i < 10) {
+            observer.next(i++);
+        } else {
+            observer.complete();
+            clearInterval(id);
+        }
+    }, 10);
 }
 
 const observer = {
     next: v => console.log(`next -> ${v}`),
-    error: ()=>{},
+    error: () => {},
     complete: () => console.log('complete'),
 };
 
