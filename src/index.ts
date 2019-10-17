@@ -34,15 +34,27 @@ class SafeObserver {
     }
 }
 
-function myObservable(observer) {
-    let safeObserver = new SafeObserver(observer);
+class Observable {
+    private _subscribe: any;
+
+    constructor(_subscribe) {
+        this._subscribe = _subscribe;
+    }
+
+    subscribe(observer) {
+        const safeObserver = new SafeObserver(observer);
+        return this._subscribe(safeObserver);
+    }
+}
+
+const myObservable = new Observable(observer => {
     let i = 0;
     const id = setInterval(() => {
         if(i < 10) {
-            safeObserver.next(i++);
+            observer.next(i++);
         } else {
-            safeObserver.complete();
-            safeObserver.next('stop me!!!');
+            observer.complete();
+            observer.next('stop me!!!');
             clearInterval(id);
         }
     }, 10);
@@ -51,7 +63,7 @@ function myObservable(observer) {
         console.log('disposed!');
         clearInterval(id);
     }
-}
+});
 
 const observer = {
     next: v => console.log(`next -> ${v}`),
@@ -59,5 +71,5 @@ const observer = {
     complete: () => console.log('complete'),
 };
 
-const unsub = myObservable(observer);
-// setTimeout(unsub, 55);
+const unsub = myObservable.subscribe(observer);
+setTimeout(unsub, 55);
